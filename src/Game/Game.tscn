@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/Game/Game.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/SixCaps-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/Classes/PalcoCamera.gd" type="Script" id=3]
+[ext_resource path="res://src/Pad/Pad.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Classes/KeyboardControll.gd" type="Script" id=5]
+[ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=6]
+
+[sub_resource type="DynamicFont" id=4]
+size = 150
+font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 960, 10 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 560, 540 )
+
+[node name="Game" type="Node2D"]
+position = Vector2( 960, 540 )
+script = ExtResource( 1 )
+
+[node name="Background" type="CanvasLayer" parent="."]
+editor/display_folded = true
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.219608, 0.0117647, 0.305882, 1 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+editor/display_folded = true
+
+[node name="Control" type="Control" parent="GUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="GUI/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -62.0
+margin_right = 62.0
+margin_bottom = 198.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 4 )
+text = "0 x 0"
+
+[node name="PalcoCamera" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 3 )
+
+[node name="LeftPad" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
+position = Vector2( -832, -112 )
+
+[node name="KeybardControll" type="Node" parent="LeftPad"]
+script = ExtResource( 5 )
+
+[node name="RightPad" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
+position = Vector2( 790, -75 )
+speed_angle_degrees = -15
+color = Color( 0.0509804, 0.258824, 0.964706, 1 )
+
+[node name="KeybardControll" type="Node" parent="RightPad"]
+script = ExtResource( 5 )
+move_up_action = "rp_move_up"
+move_down_action = "rp_move_down"
+
+[node name="Ball" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1, 0 )
+
+[node name="Wall" type="StaticBody2D" parent="."]
+editor/display_folded = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2( 0, -550 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
+position = Vector2( 0, 550 )
+shape = SubResource( 2 )
+
+[node name="LeftPointArea" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( -1520, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPointArea"]
+shape = SubResource( 3 )
+
+[node name="RightPointArea" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 1520, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightPointArea"]
+shape = SubResource( 3 )
