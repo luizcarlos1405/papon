@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Label",
+"class": "Countdown",
+"language": "GDScript",
+"path": "res://src/Classes/Countdown.gd"
+}, {
 "base": "Node",
 "class": "KeybardControll",
 "language": "GDScript",
 "path": "res://src/Classes/KeyboardControll.gd"
 } ]
 _global_script_class_icons={
+"Countdown": "",
 "KeybardControll": ""
 }
 
@@ -43,6 +49,11 @@ window/size/test_height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[global]
+
+start_message="PRESSIONE QUALQUER BOTÃO"
+start_message.mobile="TOQUE PARA COMEÇAR"
+
 [input]
 
 lp_move_down={
@@ -68,4 +79,6 @@ rp_move_up={
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"

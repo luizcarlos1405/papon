@@ -8,7 +8,6 @@ export var initial_speed: = 500
 export var speed_increase_factor: = 1.2
 export var angle_variation_degrees: = 15
 
-var initial_direction: = 0.0
 var direction: = Vector2.ZERO
 
 var _speed: = initial_speed
@@ -26,24 +25,21 @@ func _ready():
 	collision_shape.shape.radius = radius
 
 	randomize()
-	initial_direction = randi() % 2
 
-	reset(initial_direction)
+	reset()
 
 
 func _physics_process(delta: float) -> void:
 	var movement_ammount: = direction * _speed * delta
 
-	raycast.cast_to = movement_ammount + movement_ammount.normalized() * radius
+	raycast.position = direction * radius
+	raycast.cast_to = movement_ammount
 	raycast.force_raycast_update()
 
 	# Testa o movimento com RayCast2D antes para evitar tunneling
-	# TODO: Quando ocorre tunneling, a bola não é movida nesse frame e simplesmente
-	# muda de direção. Talvez queiramos mudar isso por capricho ou se, no futuro,
-	# isso gerar algum bug
+	# TODO: bug onde a bola reconhece o raycast em múltiplos frames e trava no pad
 	if raycast.get_collider():
-		handle_collision(raycast.get_collision_normal())
-		movement_ammount = Vector2.ZERO
+		movement_ammount = to_local(raycast.get_collision_point())
 
 	var collision: = move_and_collide(movement_ammount)
 
@@ -55,8 +51,12 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius, color)
 
 
-func reset(to_direction: = -1) -> void:
+func reset() -> void:
 	position = Vector2.ZERO
+	_speed = 0.0
+
+
+func start(to_direction) -> void:
 	_speed = initial_speed
 
 	if to_direction == Direction.LEFT:
