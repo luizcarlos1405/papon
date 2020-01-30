@@ -12,6 +12,7 @@ var direction: = Vector2.ZERO
 
 var _speed: = initial_speed
 var _collision_timer: = 0.2
+var _last_direction: int
 
 onready var collision_shape: = $CollisionShape2D
 onready var raycast: = $RayCast2D
@@ -22,28 +23,55 @@ func _init() -> void:
 
 
 func _ready():
+	hide()
 	collision_shape.shape.radius = radius
 
 	randomize()
-
 	reset()
+
+	Event.connect("Game_match_started", self, "_on_Event_Game_match_started")
+	Event.connect("scored", self, "_on_Event_scored")
+	Event.connect("Game_match_ended", self, "_on_Event_Game_match_ended")
+	Event.connect("Countdown_finished", self, "_on_Event_Countdown_finished")
+
+
+func _on_Event_Game_match_started() -> void:
+	show()
+
+
+func _on_Event_scored(side: String) -> void:
+	reset()
+
+
+func _on_Event_Game_match_ended() -> void:
+	reset()
+	hide()
+
+
+func _on_Event_Countdown_finished() -> void:
+	if _last_direction == Direction.LEFT:
+		start(Direction.RIGHT)
+	elif _last_direction == Direction.RIGHT:
+		start(Direction.LEFT)
 
 
 func _physics_process(delta: float) -> void:
 	var movement_ammount: = direction * _speed * delta
 
-	raycast.position = direction * radius
-	raycast.cast_to = movement_ammount
-	raycast.force_raycast_update()
+	if movement_ammount.length() > 2 * radius:
+		raycast.position = direction * radius
+		raycast.cast_to = movement_ammount
+		raycast.force_raycast_update()
 
 	# Testa o movimento com RayCast2D antes para evitar tunneling
-	# TODO: bug onde a bola reconhece o raycast em múltiplos frames e trava no pad
+	# Talvez tratar totalmente a coisão e não deixar nada pro move_and_collide
+	# no caso de tunneling
 	if raycast.get_collider():
 		movement_ammount = to_local(raycast.get_collision_point())
 
 	var collision: = move_and_collide(movement_ammount)
 
-	if collision:
+	if collision and abs(collision.normal.angle_to(direction)) > PI / 2.0:
 		handle_collision(collision.normal)
 
 
@@ -57,6 +85,7 @@ func reset() -> void:
 
 
 func start(to_direction) -> void:
+	_last_direction = to_direction
 	_speed = initial_speed
 
 	if to_direction == Direction.LEFT:

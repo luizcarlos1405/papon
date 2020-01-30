@@ -12,16 +12,28 @@ _global_script_classes=[ {
 "base": "Label",
 "class": "Countdown",
 "language": "GDScript",
-"path": "res://src/Classes/Countdown.gd"
+"path": "res://src/classes/Countdown.gd"
 }, {
 "base": "Node",
 "class": "KeybardControll",
 "language": "GDScript",
-"path": "res://src/Classes/KeyboardControll.gd"
+"path": "res://src/classes/KeyboardControll.gd"
+}, {
+"base": "Area2D",
+"class": "PointArea",
+"language": "GDScript",
+"path": "res://src/classes/PointArea.gd"
+}, {
+"base": "Label",
+"class": "Score",
+"language": "GDScript",
+"path": "res://src/classes/Score.gd"
 } ]
 _global_script_class_icons={
 "Countdown": "",
-"KeybardControll": ""
+"KeybardControll": "",
+"PointArea": "",
+"Score": ""
 }
 
 [application]
@@ -29,6 +41,10 @@ _global_script_class_icons={
 config/name="Pa-pon"
 run/main_scene="res://src/Game/Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Event="*res://src/autoload/Event.gd"
 
 [debug]
 

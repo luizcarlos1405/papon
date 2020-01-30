@@ -1,3 +1,4 @@
+tool
 extends KinematicBody2D
 
 export var acceleration: = 500
