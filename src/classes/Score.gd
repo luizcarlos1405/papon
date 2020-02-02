@@ -11,20 +11,15 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 func _ready() -> void:
 	hide()
 
-	Event.connect("Game_match_started", self, "_on_Event_Game_match_started")
+	Event.connect("Game_state_changed", self, "_on_Event_Game_state_changed")
 	Event.connect("scored", self, "_on_Event_scored")
-	Event.connect("Game_match_ended", self, "_on_Event_Game_match_ended")
 
 
-func _on_Event_Game_match_started() -> void:
-	show()
-
-
-func _on_Event_Game_match_ended() -> void:
-	show_result()
-
-	yield(Event, "Game_match_started")
-	reset()
+func _on_Event_Game_state_changed(state: int) -> void:
+	if state == Enum.GameState.IN_GAME:
+		_left_score = 0
+		_right_score = 0
+		update_scoreboard()
 
 
 func _on_Event_scored(side: String) -> void:
@@ -35,9 +30,6 @@ func _on_Event_scored(side: String) -> void:
 	elif side == "RIGHT":
 		_left_score += 1
 		update_scoreboard()
-
-#		_ball_next_direction = ball.Direction.LEFT
-#		ball.reset()
 
 
 func update_scoreboard() -> void:

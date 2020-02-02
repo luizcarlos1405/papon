@@ -9,15 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AIControl",
+"language": "GDScript",
+"path": "res://src/classes/AIControl.gd"
+}, {
 "base": "Label",
 "class": "Countdown",
 "language": "GDScript",
 "path": "res://src/classes/Countdown.gd"
 }, {
 "base": "Node",
-"class": "KeybardControll",
+"class": "KeybardControl",
 "language": "GDScript",
-"path": "res://src/classes/KeyboardControll.gd"
+"path": "res://src/classes/KeyboardControl.gd"
 }, {
 "base": "Area2D",
 "class": "PointArea",
@@ -30,8 +35,9 @@ _global_script_classes=[ {
 "path": "res://src/classes/Score.gd"
 } ]
 _global_script_class_icons={
+"AIControl": "",
 "Countdown": "",
-"KeybardControll": "",
+"KeybardControl": "",
 "PointArea": "",
 "Score": ""
 }
@@ -39,19 +45,19 @@ _global_script_class_icons={
 [application]
 
 config/name="Pa-pon"
-run/main_scene="res://src/Game/Game.tscn"
+run/main_scene="res://src/MainMenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Event="*res://src/autoload/Event.gd"
+Enum="*res://src/autoload/Enum.gd"
 
 [debug]
 
 gdscript/warnings/unassigned_variable=false
 gdscript/warnings/unassigned_variable_op_assign=false
 gdscript/warnings/unused_variable=false
-gdscript/warnings/unused_class_variable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false

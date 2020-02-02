@@ -10,35 +10,32 @@ var tween_trans: = Tween.TRANS_EXPO
 var tween_ease: = Tween.EASE_IN
 
 var _time_left: = duration
-var _match_started: = false
+
+onready var game: Node2D = owner
 
 
 func _ready() -> void:
 	hide()
 	add_child(tween)
 
-	Event.connect("Game_match_started", self, "_on_Event_Game_match_started")
 	Event.connect("scored", self, "_on_Event_scored")
-	Event.connect("Game_match_ended", self, "_on_Event_Game_match_ended")
+	Event.connect("Game_state_changed", self, "_on_Event_Game_state_changed")
 	tween.connect("tween_all_completed", self, "_on_Tween_tween_all_completed")
 
 
-func _on_Event_Game_match_started() -> void:
-	_match_started = true
-	start()
+func _on_Event_Game_state_changed(state: int) -> void:
+	match state:
+		Enum.GameState.IN_GAME:
+			start()
+		Enum.GameState.POS_GAME:
+			tween.remove_all()
+			reset()
+			hide()
 
 
 func _on_Event_scored(side: String) -> void:
-	if _match_started:
+	if game.state == Enum.GameState.IN_GAME:
 		start()
-
-
-func _on_Event_Game_match_ended() -> void:
-	_match_started = false
-	tween.stop_all()
-	reset()
-	hide()
-	pass
 
 
 func _on_Tween_tween_all_completed() -> void:

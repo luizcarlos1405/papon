@@ -1,5 +1,5 @@
 extends Node
-class_name KeybardControll
+class_name KeybardControl
 
 export var move_up_action: = "lp_move_up"
 export var move_down_action: = "lp_move_down"

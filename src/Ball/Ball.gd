@@ -4,9 +4,9 @@ enum Direction {LEFT, RIGHT}
 
 export var color: = Color(1, 1, 1)
 export var radius: = 20.0
-export var initial_speed: = 500
-export var speed_increase_factor: = 1.2
-export var angle_variation_degrees: = 15
+export var initial_speed: = 500.0
+export var speed_increase_factor: = 50.0
+export var angle_variation_degrees: = 15.0
 
 var direction: = Vector2.ZERO
 
@@ -28,24 +28,22 @@ func _ready():
 
 	randomize()
 	reset()
-
-	Event.connect("Game_match_started", self, "_on_Event_Game_match_started")
+	Event.connect("Game_state_changed", self, "_on_Event_Game_state_changed")
 	Event.connect("scored", self, "_on_Event_scored")
-	Event.connect("Game_match_ended", self, "_on_Event_Game_match_ended")
 	Event.connect("Countdown_finished", self, "_on_Event_Countdown_finished")
 
 
-func _on_Event_Game_match_started() -> void:
-	show()
+func _on_Event_Game_state_changed(state: int) -> void:
+	match state:
+		Enum.GameState.IN_GAME:
+			show()
+		Enum.GameState.POS_GAME:
+			reset()
+			hide()
 
 
 func _on_Event_scored(side: String) -> void:
 	reset()
-
-
-func _on_Event_Game_match_ended() -> void:
-	reset()
-	hide()
 
 
 func _on_Event_Countdown_finished() -> void:
@@ -96,7 +94,7 @@ func start(to_direction) -> void:
 
 func handle_collision(normal: Vector2) -> void:
 	direction = direction.bounce(normal)
-	_speed *= speed_increase_factor
+	_speed += speed_increase_factor
 
 
 static func variate_direction(direction: Vector2, variation_degrees: float) -> Vector2:
