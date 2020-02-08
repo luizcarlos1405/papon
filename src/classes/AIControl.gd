@@ -6,5 +6,5 @@ onready var pad: KinematicBody2D = get_parent()
 
 
 func _physics_process(delta: float) -> void:
-	pad.input_direction = clamp(_ball.global_position.y - pad.global_position.y, -1, 1)
+	pad.input_direction = sign(_ball.global_position.y - pad.global_position.y)
 	pass

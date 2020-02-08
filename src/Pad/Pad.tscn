@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/Pad/Pad.gd" type="Script" id=1]
 
-[sub_resource type="SegmentShape2D" id=2]
+[sub_resource type="SegmentShape2D" id=1]
 a = Vector2( -25, -100 )
 b = Vector2( -25, 100 )
 
@@ -12,4 +12,4 @@ acceleration = 2000
 color = Color( 1, 0.494118, 0.00392157, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource( 1 )

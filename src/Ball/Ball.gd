@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	var collision: = move_and_collide(movement_ammount)
 
 	if collision and abs(collision.normal.angle_to(direction)) > PI / 2.0:
-		handle_collision(collision.normal)
+		handle_collision(collision)
 
 
 func _draw() -> void:
@@ -92,9 +92,12 @@ func start(to_direction) -> void:
 		direction = variate_direction(Vector2.RIGHT, angle_variation_degrees)
 
 
-func handle_collision(normal: Vector2) -> void:
-	direction = direction.bounce(normal)
-	_speed += speed_increase_factor
+func handle_collision(collision: KinematicCollision2D) -> void:
+	direction = direction.bounce(collision.normal)
+
+	if collision.collider.is_in_group("Pad"):
+		_speed += speed_increase_factor
+		Event.emit_signal("Ball_hit_pad")
 
 
 static func variate_direction(direction: Vector2, variation_degrees: float) -> Vector2:

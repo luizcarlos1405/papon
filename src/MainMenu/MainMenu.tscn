@@ -4,11 +4,11 @@
 [ext_resource path="res://assets/fonts/SixCaps-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/ModeSelection/ModeSelection.tscn" type="PackedScene" id=3]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 150
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 60
 extra_spacing_char = 8
 font_data = ExtResource( 2 )
@@ -41,7 +41,7 @@ margin_right = 110.0
 margin_bottom = 331.0
 grow_horizontal = 2
 grow_vertical = 2
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "PA-PON"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -63,19 +63,19 @@ __meta__ = {
 [node name="Play" type="Button" parent="Buttons"]
 margin_right = 288.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Play"
 
 [node name="Options" type="Button" parent="Buttons"]
 margin_top = 136.0
 margin_right = 288.0
 margin_bottom = 222.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Options"
 
 [node name="Quit" type="Button" parent="Buttons"]
 margin_top = 272.0
 margin_right = 288.0
 margin_bottom = 358.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Quit"

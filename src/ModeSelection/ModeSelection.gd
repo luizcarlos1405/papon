@@ -18,6 +18,7 @@ func _on_HumanVSHuman_pressed() -> void:
 	get_tree().set_meta("left_controller", "HUMAN")
 	get_tree().set_meta("right_controller", "HUMAN")
 
+	get_tree().change_scene_to(GamePackedScene)
 
 
 func _on_HumanVSAI_pressed() -> void:

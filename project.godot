@@ -33,13 +33,19 @@ _global_script_classes=[ {
 "class": "Score",
 "language": "GDScript",
 "path": "res://src/classes/Score.gd"
+}, {
+"base": "Camera2D",
+"class": "ShakyCamera",
+"language": "GDScript",
+"path": "res://src/classes/ShakyCamera.gd"
 } ]
 _global_script_class_icons={
 "AIControl": "",
 "Countdown": "",
 "KeybardControl": "",
 "PointArea": "",
-"Score": ""
+"Score": "",
+"ShakyCamera": ""
 }
 
 [application]

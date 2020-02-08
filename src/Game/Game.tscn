@@ -5,13 +5,12 @@
 [ext_resource path="res://src/classes/Score.gd" type="Script" id=3]
 [ext_resource path="res://src/classes/Countdown.gd" type="Script" id=4]
 [ext_resource path="res://src/classes/StartMessage.gd" type="Script" id=5]
-[ext_resource path="res://src/classes/PalcoCamera.gd" type="Script" id=6]
+[ext_resource path="res://src/Game/ShakyCamera.gd" type="Script" id=6]
 [ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/RightPad/RightPad.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/LeftPad/LeftPad.gd" type="Script" id=9]
+[ext_resource path="res://src/Game/PauseMenu.gd" type="Script" id=9]
 [ext_resource path="res://src/LeftPad/LeftPad.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/classes/PointArea.gd" type="Script" id=11]
-[ext_resource path="res://src/RightPad/RightPad.gd" type="Script" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 150
@@ -48,6 +47,11 @@ tracks/1/keys = {
 size = 255
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=6]
+size = 100
+extra_spacing_char = 5
+font_data = ExtResource( 2 )
+
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 960, 10 )
 
@@ -75,8 +79,12 @@ color = Color( 0.219608, 0.0117647, 0.305882, 1 )
 [node name="Control" type="Control" parent="GUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Score" type="Label" parent="GUI/Control"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = 42.0
@@ -92,6 +100,7 @@ script = ExtResource( 3 )
 anims/show_result = SubResource( 2 )
 
 [node name="MatchTimeLeft" type="Label" parent="GUI/Control"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -191.0
@@ -106,6 +115,7 @@ __meta__ = {
 }
 
 [node name="Countdown" type="Label" parent="GUI/Control"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -137,8 +147,67 @@ rect_pivot_offset = Vector2( 28, 168 )
 custom_fonts/font = SubResource( 3 )
 text = "TOQUE PARA COMEÇAR"
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="PalcoCamera" type="Camera2D" parent="."]
+[node name="PauseMenu" type="Popup" parent="GUI/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -347.0
+margin_top = -262.0
+margin_right = 347.0
+margin_bottom = 262.0
+script = ExtResource( 9 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/PauseMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_stretch_ratio = 0.0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackToMainMenu" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
+margin_right = 694.0
+margin_bottom = 161.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "VOLTAR AO MENU PRINCIPAL"
+
+[node name="Quit" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
+margin_top = 181.0
+margin_right = 694.0
+margin_bottom = 342.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "SAIR DO JOGO"
+
+[node name="Cancel" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
+margin_top = 362.0
+margin_right = 694.0
+margin_bottom = 524.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+text = "CANCELAR"
+
+[node name="ShakyCamera" type="Camera2D" parent="."]
+rotating = true
 current = true
 script = ExtResource( 6 )
 
@@ -160,15 +229,9 @@ shape = SubResource( 4 )
 
 [node name="RightPad" parent="." instance=ExtResource( 8 )]
 position = Vector2( 850, 0 )
-script = ExtResource( 12 )
-acceleration = 500
-speed_angle_degrees = 15
 
 [node name="LeftPad" parent="." instance=ExtResource( 10 )]
 position = Vector2( -850, 0 )
-script = ExtResource( 9 )
-acceleration = 500
-color = Color( 0.952941, 0.623529, 0.152941, 1 )
 
 [node name="LeftPointArea" type="Area2D" parent="."]
 position = Vector2( -1520, 0 )
