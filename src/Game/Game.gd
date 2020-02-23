@@ -6,6 +6,7 @@ onready var match_time_left: Label = $GUI/Control/MatchTimeLeft
 onready var start_message: Label = $GUI/Control/StartMessage
 onready var match_timer: Timer = $MatchTimer
 onready var score: Label = $GUI/Control/Score
+onready var pause: TextureButton = $GUI/Control/Pause
 
 
 func _ready():
@@ -19,7 +20,15 @@ func _on_MatchTimer_timeout() -> void:
 
 
 func _on_Event_match_start_requested() -> void:
-	start_match()
+	match state:
+		Enum.GameState.PRE_GAME:
+			score.show()
+			start_match()
+
+		Enum.GameState.POS_GAME:
+			score.reset()
+			yield(score.animation_player, "animation_finished")
+			start_match()
 
 
 func _process(delta: float) -> void:
@@ -30,16 +39,10 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.pressed:
 			match state:
-				Enum.GameState.PRE_GAME:
-					Event.emit_signal("match_start_requested")
-					score.show()
-				Enum.GameState.POS_GAME:
+				Enum.GameState.PRE_GAME, Enum.GameState.POS_GAME:
 					if score.animation_player.is_playing():
 						return
 
-					score.reset()
-
-					yield(score.animation_player, "animation_finished")
 					Event.emit_signal("match_start_requested")
 
 

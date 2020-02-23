@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "ShakyCamera",
 "language": "GDScript",
 "path": "res://src/classes/ShakyCamera.gd"
+}, {
+"base": "Node",
+"class": "TouchControl",
+"language": "GDScript",
+"path": "res://src/classes/TouchControl.gd"
 } ]
 _global_script_class_icons={
 "AIControl": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "KeybardControl": "",
 "PointArea": "",
 "Score": "",
-"ShakyCamera": ""
+"ShakyCamera": "",
+"TouchControl": ""
 }
 
 [application]
@@ -105,8 +111,13 @@ rp_move_up={
  ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [rendering]
 
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

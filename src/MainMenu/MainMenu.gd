@@ -1,6 +1,6 @@
 extends Control
 
-export var ModeSelectionPackedScene: PackedScene
+export var ScnModeSelection: PackedScene
 
 
 onready var play: Button = $Buttons/Play
@@ -16,7 +16,7 @@ func _ready():
 
 
 func _on_Play_pressed() -> void:
-	get_tree().change_scene_to(ModeSelectionPackedScene)
+	get_tree().change_scene_to(ScnModeSelection)
 	pass
 
 
@@ -25,5 +25,5 @@ func _on_Options_pressed() -> void:
 
 
 func _on_Quit_pressed() -> void:
-
+	OS.quit()
 	pass

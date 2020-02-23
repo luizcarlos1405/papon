@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/SixCaps-Regular.ttf" type="DynamicFontData" id=2]
@@ -8,9 +8,12 @@
 [ext_resource path="res://src/Game/ShakyCamera.gd" type="Script" id=6]
 [ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/RightPad/RightPad.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/Game/PauseMenu.gd" type="Script" id=9]
+[ext_resource path="res://src/Game/Menu.gd" type="Script" id=9]
 [ext_resource path="res://src/LeftPad/LeftPad.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/classes/PointArea.gd" type="Script" id=11]
+[ext_resource path="res://assets/icons/pause_circle_outline-24px.svg" type="Texture" id=12]
+[ext_resource path="res://src/classes/Pause.gd" type="Script" id=13]
+[ext_resource path="res://src/classes/TouchControl.gd" type="Script" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 150
@@ -26,9 +29,9 @@ tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 0.183011, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1002, 0 ), Vector2( 777, 194 ) ]
+"values": [ Vector2( 1107, 20 ), Vector2( 894, 199 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -47,15 +50,15 @@ tracks/1/keys = {
 size = 255
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 100
 extra_spacing_char = 5
 font_data = ExtResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 960, 10 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 560, 540 )
 
 [node name="Game" type="Node2D"]
@@ -84,28 +87,49 @@ __meta__ = {
 }
 
 [node name="Score" type="Label" parent="GUI/Control"]
-visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 42.0
-margin_right = 166.0
-margin_bottom = 198.0
+margin_left = 147.0
+margin_top = 20.0
+margin_right = 271.0
+margin_bottom = 218.0
 grow_horizontal = 2
 grow_vertical = 2
+rect_pivot_offset = Vector2( 62, 99 )
 custom_fonts/font = SubResource( 1 )
 text = "0 x 0"
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/Control/Score"]
 anims/show_result = SubResource( 2 )
 
-[node name="MatchTimeLeft" type="Label" parent="GUI/Control"]
-visible = false
+[node name="Pause" type="TextureButton" parent="GUI/Control"]
+pause_mode = 2
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -191.0
-margin_right = -55.0
-margin_bottom = 198.0
+margin_left = -93.0
+margin_top = 20.0
+margin_right = 93.0
+margin_bottom = 205.0
+grow_horizontal = 2
+toggle_mode = true
+texture_normal = ExtResource( 12 )
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+menu_path = NodePath("../Menu")
+
+[node name="MatchTimeLeft" type="Label" parent="GUI/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -254.0
+margin_top = 20.0
+margin_right = -118.0
+margin_bottom = 218.0
 grow_horizontal = 2
 grow_vertical = 2
 custom_fonts/font = SubResource( 1 )
@@ -151,18 +175,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PauseMenu" type="Popup" parent="GUI/Control"]
+[node name="Menu" type="Popup" parent="GUI/Control"]
+pause_mode = 2
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -347.0
-margin_top = -262.0
+margin_top = 102.0
 margin_right = 347.0
-margin_bottom = 262.0
+margin_bottom = 446.0
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+MainMenuScnPath = "res://src/MainMenu/MainMenu.tscn"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/PauseMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/Menu"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_stretch_ratio = 0.0
@@ -171,40 +200,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BackToMainMenu" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
+[node name="Back" type="Button" parent="GUI/Control/Menu/VBoxContainer"]
 margin_right = 694.0
-margin_bottom = 161.0
+margin_bottom = 162.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
 text = "VOLTAR AO MENU PRINCIPAL"
 
-[node name="Quit" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
-margin_top = 181.0
+[node name="Restart" type="Button" parent="GUI/Control/Menu/VBoxContainer"]
+margin_top = 182.0
 margin_right = 694.0
-margin_bottom = 342.0
+margin_bottom = 344.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "SAIR DO JOGO"
-
-[node name="Cancel" type="Button" parent="GUI/Control/PauseMenu/VBoxContainer"]
-margin_top = 362.0
-margin_right = 694.0
-margin_bottom = 524.0
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 6 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "CANCELAR"
+text = "RECOMEÇAR"
 
 [node name="ShakyCamera" type="Camera2D" parent="."]
 rotating = true
@@ -221,17 +238,23 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 0, -550 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 0, 550 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="RightPad" parent="." instance=ExtResource( 8 )]
 position = Vector2( 850, 0 )
 
+[node name="TouchControl" type="Node" parent="RightPad"]
+script = ExtResource( 14 )
+
 [node name="LeftPad" parent="." instance=ExtResource( 10 )]
 position = Vector2( -850, 0 )
+
+[node name="TouchControl2" type="Node" parent="LeftPad"]
+script = ExtResource( 14 )
 
 [node name="LeftPointArea" type="Area2D" parent="."]
 position = Vector2( -1520, 0 )
@@ -239,7 +262,7 @@ script = ExtResource( 11 )
 side = "LEFT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPointArea"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="RightPointArea" type="Area2D" parent="."]
 position = Vector2( 1520, 0 )
@@ -247,4 +270,4 @@ script = ExtResource( 11 )
 side = "RIGHT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightPointArea"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )

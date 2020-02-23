@@ -28,6 +28,7 @@ func _physics_process(delta: float) -> void:
 	update()
 
 # Este método é estático porque eu quero
+# warning-ignore:shadowed_variable
 static func calculate_velocity(
 		input_direction: float,
 		current_velocity: float,

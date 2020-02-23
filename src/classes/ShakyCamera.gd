@@ -25,11 +25,11 @@ func _process(delta: float) -> void:
 
 	var shake: = trauma * trauma
 	# Translation
-	_open_simplex.seed = _translation_seed.x
+	_open_simplex.seed = _translation_seed.x as int
 	offset.x = max_translation.x * shake * _open_simplex.get_noise_1d(_time)
-	_open_simplex.seed = _translation_seed.y
+	_open_simplex.seed = _translation_seed.y as int
 	offset.y = max_translation.y * shake * _open_simplex.get_noise_1d(_time)
-	_open_simplex.seed = _rotation_seed
+	_open_simplex.seed = _rotation_seed as int
 	# Rotation
 	rotation_degrees -= _angle_degree_offset
 	_angle_degree_offset = max_rotation * shake * _open_simplex.get_noise_1d(_time)

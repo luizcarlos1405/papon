@@ -100,6 +100,7 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 		Event.emit_signal("Ball_hit_pad")
 
 
+# warning-ignore:shadowed_variable
 static func variate_direction(direction: Vector2, variation_degrees: float) -> Vector2:
 	var output: = direction.rotated(rand_range(
 		-deg2rad(variation_degrees),
