@@ -5,7 +5,7 @@ var state: int = Enum.GameState.PRE_GAME setget set_state
 onready var match_time_left: Label = $GUI/Control/MatchTimeLeft
 onready var start_message: Label = $GUI/Control/StartMessage
 onready var match_timer: Timer = $MatchTimer
-onready var score: Label = $GUI/Control/Score
+onready var score: Label = $GUI/Control/ScoreAxis/Score
 onready var pause: TextureButton = $GUI/Control/Pause
 
 
@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventScreenTouch:
 		if event.pressed:
 			match state:
 				Enum.GameState.PRE_GAME, Enum.GameState.POS_GAME:

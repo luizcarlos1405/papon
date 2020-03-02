@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/SixCaps-Regular.ttf" type="DynamicFontData" id=2]
@@ -7,13 +7,11 @@
 [ext_resource path="res://src/classes/StartMessage.gd" type="Script" id=5]
 [ext_resource path="res://src/Game/ShakyCamera.gd" type="Script" id=6]
 [ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/RightPad/RightPad.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/Pad/Pad.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/Game/Menu.gd" type="Script" id=9]
-[ext_resource path="res://src/LeftPad/LeftPad.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/classes/PointArea.gd" type="Script" id=11]
 [ext_resource path="res://assets/icons/pause_circle_outline-24px.svg" type="Texture" id=12]
 [ext_resource path="res://src/classes/Pause.gd" type="Script" id=13]
-[ext_resource path="res://src/classes/TouchControl.gd" type="Script" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 150
@@ -31,7 +29,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1107, 20 ), Vector2( 894, 199 ) ]
+"values": [ Vector2( 120, 20 ), Vector2( -61, 309 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -86,12 +84,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Score" type="Label" parent="GUI/Control"]
+[node name="ScoreAxis" type="Control" parent="GUI/Control"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 147.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="GUI/Control/ScoreAxis"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 120.0
 margin_top = 20.0
-margin_right = 271.0
+margin_right = 244.0
 margin_bottom = 218.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -103,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/Control/Score"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/Control/ScoreAxis/Score"]
 anims/show_result = SubResource( 2 )
 
 [node name="Pause" type="TextureButton" parent="GUI/Control"]
@@ -231,6 +236,16 @@ script = ExtResource( 6 )
 [node name="Ball" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1, 0 )
 
+[node name="LeftPad" parent="." instance=ExtResource( 8 )]
+position = Vector2( -834, -4 )
+
+[node name="RightPad" parent="." instance=ExtResource( 8 )]
+position = Vector2( 795, 0 )
+rotation = -3.14159
+side = 1
+speed_angle_degrees = -15
+color = Color( 0.137255, 0.113725, 0.827451, 1 )
+
 [node name="Wall" type="StaticBody2D" parent="."]
 __meta__ = {
 "_edit_group_": true
@@ -243,18 +258,6 @@ shape = SubResource( 5 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 0, 550 )
 shape = SubResource( 5 )
-
-[node name="RightPad" parent="." instance=ExtResource( 8 )]
-position = Vector2( 850, 0 )
-
-[node name="TouchControl" type="Node" parent="RightPad"]
-script = ExtResource( 14 )
-
-[node name="LeftPad" parent="." instance=ExtResource( 10 )]
-position = Vector2( -850, 0 )
-
-[node name="TouchControl2" type="Node" parent="LeftPad"]
-script = ExtResource( 14 )
 
 [node name="LeftPointArea" type="Area2D" parent="."]
 position = Vector2( -1520, 0 )

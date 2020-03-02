@@ -3,8 +3,8 @@
 [ext_resource path="res://src/Pad/Pad.gd" type="Script" id=1]
 
 [sub_resource type="SegmentShape2D" id=1]
-a = Vector2( -25, -100 )
-b = Vector2( -25, 100 )
+a = Vector2( 25, -100 )
+b = Vector2( 25, 100 )
 
 [node name="Pad" type="KinematicBody2D"]
 script = ExtResource( 1 )

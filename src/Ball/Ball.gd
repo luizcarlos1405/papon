@@ -16,6 +16,7 @@ var _last_direction: int
 
 onready var collision_shape: = $CollisionShape2D
 onready var raycast: = $RayCast2D
+onready var audio_stream_player = $AudioStreamPlayer
 
 
 func _init() -> void:
@@ -98,6 +99,8 @@ func handle_collision(collision: KinematicCollision2D) -> void:
 	if collision.collider.is_in_group("Pad"):
 		_speed += speed_increase_factor
 		Event.emit_signal("Ball_hit_pad")
+
+	audio_stream_player.play()
 
 
 # warning-ignore:shadowed_variable
