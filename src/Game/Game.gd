@@ -13,9 +13,16 @@ func _ready():
 	match_time_left.hide()
 	match_timer.connect("timeout", self, "_on_MatchTimer_timeout")
 	Event.connect("match_start_requested", self, "_on_Event_match_start_requested")
+	Event.connect("won_by_score", self, "_on_Event_won_by_score")
+
+	$AnimationPlayer.seek(0)
 
 
 func _on_MatchTimer_timeout() -> void:
+	end_match()
+
+
+func _on_Event_won_by_score() -> void:
 	end_match()
 
 
@@ -32,22 +39,27 @@ func _on_Event_match_start_requested() -> void:
 
 
 func _process(delta: float) -> void:
-	match_time_left.text = "%.2f" % match_timer.time_left
+	match_time_left.text = "%d" % ceil(match_timer.time_left)
 
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventScreenTouch:
 		if event.pressed:
 			match state:
-				Enum.GameState.PRE_GAME, Enum.GameState.POS_GAME:
+				Enum.GameState.PRE_GAME:
 					if score.animation_player.is_playing():
 						return
 
-					Event.emit_signal("match_start_requested")
+					$AnimationPlayer.play("start-game")
+
+				Enum.GameState.POS_GAME:
+					if score.animation_player.is_playing():
+						return
+
+					$GUI/Control/Countdown.start()
 
 
 func start_match() -> void:
-	start_message.hide()
 	match_time_left.show()
 
 	set_state(Enum.GameState.IN_GAME)

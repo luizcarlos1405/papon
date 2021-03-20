@@ -1,6 +1,8 @@
 extends Label
 class_name Score
 
+export var score_to_win: = 5
+
 var _score_template: = "%s x %s"
 var _left_score: = 0
 var _right_score: = 0
@@ -32,6 +34,10 @@ func _on_Event_scored(side: String) -> void:
 		update_scoreboard()
 
 
+	if _left_score >= score_to_win or _right_score >= score_to_win:
+		Event.emit_signal("won_by_score")
+
+
 func update_scoreboard() -> void:
 	text = _score_template % [_left_score, _right_score]
 
@@ -41,4 +47,4 @@ func show_result() -> void:
 
 
 func reset() -> void:
-	animation_player.play_backwards("show_result")
+	animation_player.play("hide_result")

@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/images/control-arrow.svg" type="Texture" id=1]
+[ext_resource path="res://src/Controller/Controller.gd" type="Script" id=2]
+
+[node name="Controller" type="Control"]
+anchor_right = 0.488
+anchor_bottom = 1.0
+margin_right = -336.96
+rect_min_size = Vector2( 400, 0 )
+mouse_filter = 1
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 540.0 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 940.0 ]
+}
+normal_color = Color( 0, 0, 0, 0.392157 )
+active_color = Color( 0.898039, 1, 0, 0.392157 )
+
+[node name="Arrows" type="Control" parent="."]
+anchor_left = 1.438
+anchor_right = 1.438
+anchor_bottom = 1.0
+margin_left = -793.8
+margin_right = -493.8
+rect_pivot_offset = Vector2( 150, 540 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Up" type="TextureRect" parent="Arrows"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -69.0
+margin_top = -281.0
+margin_right = 69.0
+rect_pivot_offset = Vector2( 69, 281 )
+mouse_filter = 2
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Down" type="TextureRect" parent="Arrows"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -69.0
+margin_right = 69.0
+margin_bottom = 281.0
+rect_pivot_offset = Vector2( 69, 0 )
+mouse_filter = 2
+texture = ExtResource( 1 )
+flip_v = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

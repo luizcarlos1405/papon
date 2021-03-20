@@ -80,6 +80,7 @@ func start() -> void:
 	reset()
 	show()
 	animate()
+	Event.emit_signal("match_start_requested")
 
 
 func reset() -> void:

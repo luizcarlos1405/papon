@@ -24,6 +24,7 @@ func _init() -> void:
 
 
 func _ready():
+	$Particles2D.set_as_toplevel(true)
 	hide()
 	collision_shape.shape.radius = radius
 
@@ -44,6 +45,16 @@ func _on_Event_Game_state_changed(state: int) -> void:
 
 
 func _on_Event_scored(side: String) -> void:
+	$Particles2D.global_position = global_position
+
+	if side == "LEFT":
+		$Particles2D.rotation = 0
+	else:
+		prints("PI", side)
+		$Particles2D.rotation = PI
+
+	$Particles2D.emitting = true
+
 	reset()
 
 
@@ -72,10 +83,6 @@ func _physics_process(delta: float) -> void:
 
 	if collision and abs(collision.normal.angle_to(direction)) > PI / 2.0:
 		handle_collision(collision)
-
-
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, radius, color)
 
 
 func reset() -> void:

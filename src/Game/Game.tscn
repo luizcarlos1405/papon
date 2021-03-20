@@ -1,24 +1,109 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/Game/Game.gd" type="Script" id=1]
-[ext_resource path="res://assets/fonts/SixCaps-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/icons/play_circle_outline-24px.svg" type="Texture" id=2]
 [ext_resource path="res://src/classes/Score.gd" type="Script" id=3]
 [ext_resource path="res://src/classes/Countdown.gd" type="Script" id=4]
-[ext_resource path="res://src/classes/StartMessage.gd" type="Script" id=5]
+[ext_resource path="res://src/Game/animations/hide_result.tres" type="Animation" id=5]
 [ext_resource path="res://src/Game/ShakyCamera.gd" type="Script" id=6]
 [ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/Pad/Pad.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/Game/Menu.gd" type="Script" id=9]
+[ext_resource path="res://crt_shader.shader" type="Shader" id=10]
 [ext_resource path="res://src/classes/PointArea.gd" type="Script" id=11]
 [ext_resource path="res://assets/icons/pause_circle_outline-24px.svg" type="Texture" id=12]
 [ext_resource path="res://src/classes/Pause.gd" type="Script" id=13]
+[ext_resource path="res://assets/images/background.svg" type="Texture" id=14]
+[ext_resource path="res://assets/images/marks.svg" type="Texture" id=16]
+[ext_resource path="res://src/CurveText/CurveText.gd" type="Script" id=17]
+[ext_resource path="res://src/Controller/Controller.tscn" type="PackedScene" id=18]
+[ext_resource path="res://assets/fonts/urw_gothic_l_book.ttf" type="DynamicFontData" id=19]
+[ext_resource path="res://src/Game/animations/spinning-curve-text.tres" type="Animation" id=20]
 
-[sub_resource type="DynamicFont" id=1]
-size = 150
-font_data = ExtResource( 2 )
+[sub_resource type="Animation" id=1]
+resource_name = "start-game"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CenterText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("GUI/Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.8 ),
+"transitions": PoolRealArray( 2.07053, 2.07053, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pads:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pads:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.9, 1.7 ),
+"transitions": PoolRealArray( 0.170755, 0.170755, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath("GUI/Control/Countdown")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 1.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Marks:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.9, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.294118 ) ]
+}
 
-[sub_resource type="Animation" id=2]
-resource_name = "show_result"
+[sub_resource type="DynamicFont" id=2]
+size = 90
+extra_spacing_space = -10
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "hide_result"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 1
@@ -26,10 +111,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 0.15932, 1 ),
 "update": 0,
-"values": [ Vector2( 120, 20 ), Vector2( -61, 309 ) ]
+"values": [ Vector2( -88, 540 ), Vector2( 130, 45 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rect_scale")
@@ -38,46 +123,97 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 0.225313, 1 ),
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 0.15932, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 3.03554, 3.03554 ) ]
+"values": [ Vector2( 3.036, 3.036 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="DynamicFont" id=3]
-size = 255
-font_data = ExtResource( 2 )
-
 [sub_resource type="DynamicFont" id=4]
-size = 100
-extra_spacing_char = 5
-font_data = ExtResource( 2 )
+size = 400
+extra_spacing_space = -10
+font_data = ExtResource( 19 )
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 960, 10 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 10 )
+shader_param/screen_size = Vector2( 1920, 1080 )
+shader_param/show_curvature = true
+shader_param/curvature_x_amount = 8.57
+shader_param/curvature_y_amount = 6.8
+shader_param/corner_color = Color( 0.113725, 0, 0, 1 )
+shader_param/show_vignette = true
+shader_param/vignette_opacity = 0.42
+shader_param/show_horizontal_scan_lines = false
+shader_param/horizontal_scan_lines_amount = 180.0
+shader_param/horizontal_scan_lines_opacity = 0.32
+shader_param/show_vertical_scan_lines = false
+shader_param/vertical_scan_lines_amount = 314.3
+shader_param/vertical_scan_lines_opacity = 0.35
+shader_param/boost = 1.2
+shader_param/aberration_amount = 0.0
 
 [sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 960, 10 )
+
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 560, 540 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 64
+outline_size = 3
+outline_color = Color( 0, 0, 0, 0.596078 )
+font_data = ExtResource( 19 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 64
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 19 )
 
 [node name="Game" type="Node2D"]
 position = Vector2( 960, 540 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 539.995 ]
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "spinning-curve-text"
+anims/sandbox = ExtResource( 20 )
+anims/spinning-curve-text = ExtResource( 20 )
+anims/start-game = SubResource( 1 )
 
 [node name="MatchTimer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 120.0
 one_shot = true
+
+[node name="Marks" type="TextureRect" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 16 )
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="ColorRect" type="ColorRect" parent="Background"]
+[node name="Background" type="TextureRect" parent="Background"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.219608, 0.0117647, 0.305882, 1 )
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="GUI"]
+modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -94,14 +230,14 @@ __meta__ = {
 [node name="Score" type="Label" parent="GUI/Control/ScoreAxis"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 120.0
-margin_top = 20.0
-margin_right = 244.0
-margin_bottom = 218.0
+margin_left = 130.0
+margin_top = 45.0
+margin_right = 303.0
+margin_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_pivot_offset = Vector2( 62, 99 )
-custom_fonts/font = SubResource( 1 )
+rect_pivot_offset = Vector2( 86, 99 )
+custom_fonts/font = SubResource( 2 )
 text = "0 x 0"
 script = ExtResource( 3 )
 __meta__ = {
@@ -109,7 +245,8 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/Control/ScoreAxis/Score"]
-anims/show_result = SubResource( 2 )
+anims/hide_result = SubResource( 3 )
+anims/show_result = ExtResource( 5 )
 
 [node name="Pause" type="TextureButton" parent="GUI/Control"]
 pause_mode = 2
@@ -122,111 +259,78 @@ margin_bottom = 205.0
 grow_horizontal = 2
 toggle_mode = true
 texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 2 )
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-menu_path = NodePath("../Menu")
 
 [node name="MatchTimeLeft" type="Label" parent="GUI/Control"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -254.0
-margin_top = 20.0
-margin_right = -118.0
-margin_bottom = 218.0
-grow_horizontal = 2
+margin_left = -185.0
+margin_top = 45.0
+margin_right = -135.0
+margin_bottom = 164.0
+grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 1 )
-text = "0.00"
+custom_fonts/font = SubResource( 2 )
+text = "60"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Countdown" type="Label" parent="GUI/Control"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -28.0
-margin_top = -360.0
-margin_right = 28.0
-margin_bottom = -24.0
+margin_left = -111.0
+margin_top = -250.0
+margin_right = 111.0
+margin_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_pivot_offset = Vector2( 28, 168 )
-custom_fonts/font = SubResource( 3 )
+rect_pivot_offset = Vector2( 111, 250 )
+custom_fonts/font = SubResource( 4 )
 text = "3"
 script = ExtResource( 4 )
-
-[node name="StartMessage" type="Label" parent="GUI/Control"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -28.0
-margin_top = -168.0
-margin_right = 28.0
-margin_bottom = 168.0
-grow_horizontal = 2
-grow_vertical = 2
-rect_pivot_offset = Vector2( 28, 168 )
-custom_fonts/font = SubResource( 3 )
-text = "TOQUE PARA COMEÇAR"
-script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Menu" type="Popup" parent="GUI/Control"]
-pause_mode = 2
-anchor_left = 0.5
-anchor_top = 0.5
+[node name="LeftController" parent="GUI/Control" instance=ExtResource( 18 )]
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -347.0
-margin_top = 102.0
-margin_right = 347.0
-margin_bottom = 446.0
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-MainMenuScnPath = "res://src/MainMenu/MainMenu.tscn"
+margin_right = -360.0
+mouse_filter = 2
+pad_path = NodePath("../../../Pads/LeftPad")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/Control/Menu"]
+[node name="Arrows" parent="GUI/Control/LeftController" index="0"]
+margin_left = -762.8
+margin_right = -462.8
+
+[node name="RightController" parent="GUI/Control" instance=ExtResource( 18 )]
+anchor_left = 0.5
+anchor_right = 0.999
+margin_left = 359.0
+margin_right = 0.919922
+mouse_filter = 2
+pad_path = NodePath("../../../Pads/RightPad")
+
+[node name="Arrows" parent="GUI/Control/RightController" index="0"]
+anchor_left = -0.001
+anchor_right = -0.001
+margin_left = 199.6
+margin_right = 499.6
+
+[node name="CRT" type="ColorRect" parent="GUI"]
+material = SubResource( 5 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-size_flags_stretch_ratio = 0.0
-custom_constants/separation = 20
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Back" type="Button" parent="GUI/Control/Menu/VBoxContainer"]
-margin_right = 694.0
-margin_bottom = 162.0
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "VOLTAR AO MENU PRINCIPAL"
-
-[node name="Restart" type="Button" parent="GUI/Control/Menu/VBoxContainer"]
-margin_top = 182.0
-margin_right = 694.0
-margin_bottom = 344.0
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
-custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
-text = "RECOMEÇAR"
 
 [node name="ShakyCamera" type="Camera2D" parent="."]
 rotating = true
@@ -235,16 +339,26 @@ script = ExtResource( 6 )
 
 [node name="Ball" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1, 0 )
+radius = 30.0
+initial_speed = 400.0
 
-[node name="LeftPad" parent="." instance=ExtResource( 8 )]
-position = Vector2( -834, -4 )
+[node name="Pads" type="Node2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+scale = Vector2( 1e-05, 1e-05 )
 
-[node name="RightPad" parent="." instance=ExtResource( 8 )]
-position = Vector2( 795, 0 )
-rotation = -3.14159
+[node name="LeftPad" parent="Pads" instance=ExtResource( 8 )]
+modulate = Color( 0.207843, 0.984314, 0.827451, 1 )
+position = Vector2( -500, -4 )
+
+[node name="RightPad" parent="Pads" instance=ExtResource( 8 )]
+modulate = Color( 1, 0.164706, 0.835294, 1 )
+position = Vector2( 500, -0.00134277 )
+scale = Vector2( 0.999891, 0.999891 )
 side = 1
-speed_angle_degrees = -15
 color = Color( 0.137255, 0.113725, 0.827451, 1 )
+
+[node name="Node2D" type="Node2D" parent="."]
+rotation = 3.14159
 
 [node name="Wall" type="StaticBody2D" parent="."]
 __meta__ = {
@@ -253,11 +367,11 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 0, -550 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
 position = Vector2( 0, 550 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="LeftPointArea" type="Area2D" parent="."]
 position = Vector2( -1520, 0 )
@@ -265,7 +379,7 @@ script = ExtResource( 11 )
 side = "LEFT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPointArea"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="RightPointArea" type="Area2D" parent="."]
 position = Vector2( 1520, 0 )
@@ -273,4 +387,33 @@ script = ExtResource( 11 )
 side = "RIGHT"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightPointArea"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
+
+[node name="CenterText" type="Node2D" parent="."]
+light_mask = -2147483647
+
+[node name="CurveTextShadow" type="Node2D" parent="CenterText"]
+position = Vector2( 4, 2 )
+rotation = 6.28319
+
+[node name="CurveText" type="Node2D" parent="CenterText/CurveTextShadow"]
+position = Vector2( 230, 0 )
+script = ExtResource( 17 )
+text = "TOQUE PARA COMEÇAR   TOQUE PARA COMEÇAR"
+letter_spacing = -4.8
+color = Color( 0, 0, 0, 0.435294 )
+custom_font = SubResource( 8 )
+
+[node name="CurveTextCenter" type="Node2D" parent="CenterText"]
+rotation = 6.28319
+
+[node name="CurveText" type="Node2D" parent="CenterText/CurveTextCenter"]
+position = Vector2( 230, 0 )
+script = ExtResource( 17 )
+text = "TOQUE PARA COMEÇAR   TOQUE PARA COMEÇAR"
+letter_spacing = -4.8
+custom_font = SubResource( 9 )
+
+[editable path="GUI/Control/LeftController"]
+
+[editable path="GUI/Control/RightController"]

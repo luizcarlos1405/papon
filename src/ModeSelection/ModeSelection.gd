@@ -16,21 +16,21 @@ func _ready():
 
 
 func _on_HumanVSHuman_pressed() -> void:
-	get_tree().set_meta("left_controller", HumanControl)
-	get_tree().set_meta("right_controller", HumanControl)
+#	get_tree().set_meta("left_controller", HumanControl)
+#	get_tree().set_meta("right_controller", HumanControl)
 
 	get_tree().change_scene_to(GamePackedScene)
 
 
 func _on_HumanVSAI_pressed() -> void:
-	get_tree().set_meta("left_controller", HumanControl)
-	get_tree().set_meta("right_controller", AIControl)
+#	get_tree().set_meta("left_controller", HumanControl)
+#	get_tree().set_meta("right_controller", AIControl)
 
 	get_tree().change_scene_to(GamePackedScene)
 
 
 func _on_AIVSAI_pressed() -> void:
-	get_tree().set_meta("left_controller", AIControl)
-	get_tree().set_meta("right_controller", AIControl)
+		#	get_tree().set_meta("left_controller", AIControl)
+		#	get_tree().set_meta("right_controller", AIControl)
 
 	get_tree().change_scene_to(GamePackedScene)
