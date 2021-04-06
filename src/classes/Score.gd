@@ -35,6 +35,8 @@ func _on_Event_scored(side: String) -> void:
 
 
 	if _left_score >= score_to_win or _right_score >= score_to_win:
+		# Sem esse yield a bola explode no meio depois do último ponto
+		yield(get_tree(), "idle_frame")
 		Event.emit_signal("won_by_score")
 
 

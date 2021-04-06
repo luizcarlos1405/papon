@@ -12,6 +12,7 @@ var tween_ease: = Tween.EASE_IN
 var _time_left: = duration
 
 onready var game: Node2D = owner
+onready var sfx: AudioStreamPlayer = $Countdown
 
 
 func _ready() -> void:
@@ -31,6 +32,11 @@ func _on_Event_Game_state_changed(state: int) -> void:
 			tween.remove_all()
 			reset()
 			hide()
+
+			# Sem esses yields o countdown toca quando o jogo acaba
+			yield(get_tree(), "idle_frame")
+			yield(get_tree(), "idle_frame")
+			sfx.stop()
 
 
 func _on_Event_scored(side: String) -> void:
@@ -80,6 +86,7 @@ func start() -> void:
 	reset()
 	show()
 	animate()
+	sfx.play()
 	Event.emit_signal("match_start_requested")
 
 

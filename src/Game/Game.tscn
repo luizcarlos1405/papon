@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/Game/Game.gd" type="Script" id=1]
 [ext_resource path="res://assets/icons/play_circle_outline-24px.svg" type="Texture" id=2]
@@ -8,16 +8,20 @@
 [ext_resource path="res://src/Game/ShakyCamera.gd" type="Script" id=6]
 [ext_resource path="res://src/Ball/Ball.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/Pad/Pad.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/audio/fx/scored.ogg" type="AudioStream" id=9]
 [ext_resource path="res://crt_shader.shader" type="Shader" id=10]
 [ext_resource path="res://src/classes/PointArea.gd" type="Script" id=11]
 [ext_resource path="res://assets/icons/pause_circle_outline-24px.svg" type="Texture" id=12]
 [ext_resource path="res://src/classes/Pause.gd" type="Script" id=13]
 [ext_resource path="res://assets/images/background.svg" type="Texture" id=14]
+[ext_resource path="res://assets/audio/fx/transition_r1_Loop.ogg" type="AudioStream" id=15]
 [ext_resource path="res://assets/images/marks.svg" type="Texture" id=16]
 [ext_resource path="res://src/CurveText/CurveText.gd" type="Script" id=17]
 [ext_resource path="res://src/Controller/Controller.tscn" type="PackedScene" id=18]
 [ext_resource path="res://assets/fonts/urw_gothic_l_book.ttf" type="DynamicFontData" id=19]
 [ext_resource path="res://src/Game/animations/spinning-curve-text.tres" type="Animation" id=20]
+[ext_resource path="res://assets/audio/background-loop_r4_session.ogg" type="AudioStream" id=21]
+[ext_resource path="res://assets/audio/fx/countdown_r1_Loop.ogg" type="AudioStream" id=22]
 
 [sub_resource type="Animation" id=1]
 resource_name = "start-game"
@@ -95,6 +99,34 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0.294118 ) ]
+}
+tracks/6/type = "audio"
+tracks/6/path = NodePath("Sfx/Transition")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 15 )
+} ],
+"times": PoolRealArray( 0 )
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("AudioStreamPlayer")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
 }
 
 [sub_resource type="DynamicFont" id=2]
@@ -176,9 +208,20 @@ __meta__ = {
 "_edit_horizontal_guides_": [ 539.995 ]
 }
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+
+[node name="Sfx" type="Node" parent="."]
+
+[node name="Scored" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource( 9 )
+volume_db = -10.0
+
+[node name="Transition" type="AudioStreamPlayer" parent="Sfx"]
+volume_db = 8.595
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "spinning-curve-text"
-anims/sandbox = ExtResource( 20 )
 anims/spinning-curve-text = ExtResource( 20 )
 anims/start-game = SubResource( 1 )
 
@@ -299,6 +342,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Countdown" type="AudioStreamPlayer" parent="GUI/Control/Countdown"]
+stream = ExtResource( 22 )
+
 [node name="LeftController" parent="GUI/Control" instance=ExtResource( 18 )]
 anchor_right = 0.5
 margin_right = -360.0
@@ -306,8 +352,10 @@ mouse_filter = 2
 pad_path = NodePath("../../../Pads/LeftPad")
 
 [node name="Arrows" parent="GUI/Control/LeftController" index="0"]
-margin_left = -762.8
-margin_right = -462.8
+anchor_left = 0.0
+anchor_right = 0.704
+margin_left = 70.0
+margin_right = -52.4
 
 [node name="RightController" parent="GUI/Control" instance=ExtResource( 18 )]
 anchor_left = 0.5
@@ -318,10 +366,10 @@ mouse_filter = 2
 pad_path = NodePath("../../../Pads/RightPad")
 
 [node name="Arrows" parent="GUI/Control/RightController" index="0"]
-anchor_left = -0.001
-anchor_right = -0.001
-margin_left = 199.6
-margin_right = 499.6
+anchor_left = 0.298
+anchor_right = 1.0
+margin_left = 53.2
+margin_right = -68.0
 
 [node name="CRT" type="ColorRect" parent="GUI"]
 material = SubResource( 5 )

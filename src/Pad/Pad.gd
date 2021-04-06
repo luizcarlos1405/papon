@@ -75,7 +75,6 @@ static func calculate_velocity(
 
 	return output
 
-
 static func calculate_angular_velocity(
 		angular_velocity: float,
 		target_rotation: float,
@@ -126,6 +125,3 @@ func set_side(value: int) -> void:
 		$Sprite.flip_h = true
 		$CollisionShape2D.rotation = PI
 
-
-#func _draw() -> void:
-#	draw_rect(Rect2(-size / 2.0, size), color)

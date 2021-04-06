@@ -3,7 +3,6 @@ extends Node2D
 var state: int = Enum.GameState.PRE_GAME setget set_state
 
 onready var match_time_left: Label = $GUI/Control/MatchTimeLeft
-onready var start_message: Label = $GUI/Control/StartMessage
 onready var match_timer: Timer = $MatchTimer
 onready var score: Label = $GUI/Control/ScoreAxis/Score
 onready var pause: TextureButton = $GUI/Control/Pause
@@ -14,6 +13,7 @@ func _ready():
 	match_timer.connect("timeout", self, "_on_MatchTimer_timeout")
 	Event.connect("match_start_requested", self, "_on_Event_match_start_requested")
 	Event.connect("won_by_score", self, "_on_Event_won_by_score")
+	Event.connect("scored", self, "_on_Event_scored")
 
 	$AnimationPlayer.seek(0)
 
@@ -24,6 +24,10 @@ func _on_MatchTimer_timeout() -> void:
 
 func _on_Event_won_by_score() -> void:
 	end_match()
+
+
+func _on_Event_scored(side: String) -> void:
+	$Sfx/Scored.play()
 
 
 func _on_Event_match_start_requested() -> void:

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/crt-off.png-19ebecaf0bb888e8e7f540098e0a0ab3.stex"
+path="res://.import/splash.png-575b8572c591ae2c5c0cc7733845c511.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/crt-off.png"
-dest_files=[ "res://.import/crt-off.png-19ebecaf0bb888e8e7f540098e0a0ab3.stex" ]
+source_file="res://assets/images/splash.png"
+dest_files=[ "res://.import/splash.png-575b8572c591ae2c5c0cc7733845c511.stex" ]
 
 [params]
 

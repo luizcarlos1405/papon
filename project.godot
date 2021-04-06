@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "AIControl",
-"language": "GDScript",
-"path": "res://src/classes/AIControl.gd"
-}, {
 "base": "Label",
 "class": "Countdown",
 "language": "GDScript",
@@ -23,11 +18,6 @@ _global_script_classes=[ {
 "class": "CurveText",
 "language": "GDScript",
 "path": "res://src/CurveText/CurveText.gd"
-}, {
-"base": "Node",
-"class": "KeybardControl",
-"language": "GDScript",
-"path": "res://src/classes/KeyboardControl.gd"
 }, {
 "base": "Area2D",
 "class": "PointArea",
@@ -43,28 +33,21 @@ _global_script_classes=[ {
 "class": "ShakyCamera",
 "language": "GDScript",
 "path": "res://src/classes/ShakyCamera.gd"
-}, {
-"base": "Node",
-"class": "TouchControl",
-"language": "GDScript",
-"path": "res://src/classes/TouchControl.gd"
 } ]
 _global_script_class_icons={
-"AIControl": "",
 "Countdown": "",
 "CurveText": "",
-"KeybardControl": "",
 "PointArea": "",
 "Score": "",
-"ShakyCamera": "",
-"TouchControl": ""
+"ShakyCamera": ""
 }
 
 [application]
 
 config/name="Pa-pon"
 run/main_scene="res://src/Game/Game.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://assets/images/splash.png"
+boot_splash/bg_color=Color( 0.0784314, 0.0784314, 0.0784314, 1 )
 
 [autoload]
 
@@ -88,6 +71,10 @@ window/size/test_width=960
 window/size/test_height=540
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "sprite_trail" )
 
 [global]
 

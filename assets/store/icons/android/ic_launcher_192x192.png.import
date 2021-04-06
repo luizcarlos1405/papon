@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/crt-on.png-a6b5fd87de1a9837163bb4ce827077d5.stex"
+path="res://.import/ic_launcher_192x192.png-7753cffdb2f76192a5fbc3447bb54f9c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/crt-on.png"
-dest_files=[ "res://.import/crt-on.png-a6b5fd87de1a9837163bb4ce827077d5.stex" ]
+source_file="res://assets/store/icons/android/ic_launcher_192x192.png"
+dest_files=[ "res://.import/ic_launcher_192x192.png-7753cffdb2f76192a5fbc3447bb54f9c.stex" ]
 
 [params]
 

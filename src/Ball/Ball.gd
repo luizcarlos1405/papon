@@ -7,6 +7,7 @@ export var radius: = 20.0
 export var initial_speed: = 500.0
 export var speed_increase_factor: = 50.0
 export var angle_variation_degrees: = 15.0
+export var max_angle: = deg2rad(70)
 
 var direction: = Vector2.ZERO
 
@@ -17,6 +18,7 @@ var _last_direction: int
 onready var collision_shape: = $CollisionShape2D
 onready var raycast: = $RayCast2D
 onready var audio_stream_player = $AudioStreamPlayer
+onready var max_angle_sine: = abs(sin(max_angle))
 
 
 func _init() -> void:
@@ -24,11 +26,13 @@ func _init() -> void:
 
 
 func _ready():
+	randomize()
+
 	$Particles2D.set_as_toplevel(true)
 	hide()
 	collision_shape.shape.radius = radius
+	_last_direction = randi() % 2
 
-	randomize()
 	reset()
 	Event.connect("Game_state_changed", self, "_on_Event_Game_state_changed")
 	Event.connect("scored", self, "_on_Event_scored")
@@ -40,8 +44,8 @@ func _on_Event_Game_state_changed(state: int) -> void:
 		Enum.GameState.IN_GAME:
 			show()
 		Enum.GameState.POS_GAME:
-			reset()
 			hide()
+			reset()
 
 
 func _on_Event_scored(side: String) -> void:
@@ -50,7 +54,6 @@ func _on_Event_scored(side: String) -> void:
 	if side == "LEFT":
 		$Particles2D.rotation = 0
 	else:
-		prints("PI", side)
 		$Particles2D.rotation = PI
 
 	$Particles2D.emitting = true
@@ -101,7 +104,22 @@ func start(to_direction) -> void:
 
 
 func handle_collision(collision: KinematicCollision2D) -> void:
-	direction = direction.bounce(collision.normal)
+	var bounce_direction = direction.bounce(collision.normal)
+
+	# Garante que a direnção vai estar apontando para a direção oposta após colidir
+	if (sign(bounce_direction.x) == sign(direction.x) and collision.collider.is_in_group('Pad')):
+		bounce_direction.x *= -1
+
+	direction = bounce_direction
+
+	if (abs(sin(direction.angle())) > max_angle_sine):
+		# Obtem os sinais do vetor ou randomiza um sinal se o valor for 0
+		var dir_signs = Vector2(
+			sign(direction.x) if direction.x else sign(randi() % 2 - 0.5),
+			sign(direction.y) if direction.y else sign(randi() % 2 - 0.5)
+		)
+
+		direction = dir_signs * Vector2.RIGHT.rotated(max_angle)
 
 	if collision.collider.is_in_group("Pad"):
 		_speed += speed_increase_factor

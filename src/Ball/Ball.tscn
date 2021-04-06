@@ -1,18 +1,18 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Ball/Ball.gd" type="Script" id=1]
-[ext_resource path="res://assets/audio/fx/hit.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/audio/fx/hit.ogg" type="AudioStream" id=2]
 [ext_resource path="res://assets/images/ball.svg" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
-[sub_resource type="Gradient" id=3]
+[sub_resource type="Gradient" id=2]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticlesMaterial" id=4]
 lifetime_randomness = 0.21
 emission_shape = 1
 emission_sphere_radius = 15.0
@@ -29,7 +29,7 @@ damping = 89.73
 damping_random = 1.0
 scale = 10.0
 scale_random = 0.32
-color_ramp = SubResource( 4 )
+color_ramp = SubResource( 3 )
 
 [node name="Ball" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -44,16 +44,23 @@ shape = SubResource( 1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+volume_db = -15.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )
 
+[node name="Sprite2" type="Sprite" parent="Sprite"]
+self_modulate = Color( 0, 0, 0, 1 )
+show_behind_parent = true
+position = Vector2( 1, 1 )
+texture = ExtResource( 3 )
+
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
-amount = 900
+amount = 200
 lifetime = 2.0
 one_shot = true
 explosiveness = 0.95
 randomness = 0.73
 local_coords = false
-process_material = SubResource( 2 )
+process_material = SubResource( 4 )

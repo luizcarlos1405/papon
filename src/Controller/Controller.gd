@@ -1,25 +1,31 @@
 extends Control
 
 const Pad: = preload("res://src/Pad/Pad.gd")
+const Ball: = preload("res://src/Ball/Ball.gd")
 
 export var pad_path: = NodePath()
 export var normal_color: = Color(1, 1, 1)
 export var active_color: = Color(1, 1, 1)
 
 var pad: Pad
+var ball: Ball
 
 var _input_center: = Vector2.ZERO
 var _touch_by_index: = {}
+var _is_ai: = true
 
 onready var up_arrow: = $Arrows/Up
 onready var down_arrow: = $Arrows/Down
 onready var arrows: = $Arrows
+onready var timer: = $Timer
 
 
 func _ready():
 	pad = get_node_or_null(pad_path)
+	ball = get_tree().get_nodes_in_group('Ball')[0]
 
 	arrows.connect("resized", self, "_on_Arrows_resized")
+	timer.connect("timeout", self, "_on_Timer_timeout")
 	down_arrow.self_modulate = normal_color
 	up_arrow.self_modulate = normal_color
 
@@ -43,6 +49,8 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventScreenTouch:
+		_is_ai = false
+		timer.start()
 		var event_position: Vector2 = event.position - rect_global_position
 
 		if event.pressed:
@@ -59,7 +67,12 @@ func _input(event: InputEvent) -> void:
 
 
 func calculate_input_direction() -> Vector2:
+	if _is_ai:
+		var height_diff: = ball.global_position.y - pad.global_position.y
+		return Vector2.ZERO if abs(height_diff) < 2 else Vector2(0, sign(height_diff))
+
 	if _touch_by_index.empty():
+
 		return Vector2(pad.input_direction.x, 0)
 
 	var max_x_position: float = arrows.rect_size.x / 2
@@ -116,3 +129,8 @@ func send_input_direction(input_direction: Vector2) -> void:
 func _on_Arrows_resized() -> void:
 	arrows.rect_pivot_offset = arrows.rect_size / 2
 	_input_center = arrows.rect_pivot_offset + arrows.rect_position
+
+
+func _on_Timer_timeout() -> void:
+	_is_ai = true
+	pass

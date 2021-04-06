@@ -33,7 +33,6 @@ func _process(delta):
 	pass
 
 func _draw():
-#	print(rad2deg(get_global_rotation()))
 	var reference: = position if not use_global_position else global_position
 	var direction: = reference - center
 
